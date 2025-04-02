@@ -8,7 +8,7 @@ const CANDIDATE_ID = process.env.CANDIDATE_ID;
 async function postPolyanet(row: number, column: number) {
   try {
     const response = await axios.post(
-      "/api/polyanets",
+      "https://challenge.crossmint.io/api/polyanets",
       {
         row,
         column,
