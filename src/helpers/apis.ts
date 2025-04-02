@@ -3,7 +3,7 @@ import axios from "axios";
 // Load environment variables from .env file
 import { config } from "dotenv";
 import { delay } from "./draw";
-import { Directions } from "./types";
+import { Colors, Directions } from "./types";
 config();
 
 // Get the candidate ID from environment variables
@@ -41,5 +41,19 @@ export async function postComETH(row: number, column: number, direction: Directi
     console.log(`comETH placed at (${row}, ${column}) facing ${direction}`);
   } catch (error) {
     console.error(`Failed to place comETH at (${row}, ${column}):`, error);
+  }
+}
+
+// This function posts a SOLoon at given coordinates with a color
+async function postSOLoon(row: number, column: number, color: Colors) {
+  try {
+    await axios.post(
+      "https://challenge.crossmint.io/api/soloons",
+      { row, column, color, candidateId: CANDIDATE_ID },
+      { headers: { "Content-Type": "application/json" } }
+    );
+    console.log(`SOLoon placed at (${row}, ${column}) with color ${color}`);
+  } catch (error) {
+    console.error(`Failed to place SOLoon at (${row}, ${column}):`, error);
   }
 }
