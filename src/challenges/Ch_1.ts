@@ -12,7 +12,7 @@ const CANDIDATE_ID = process.env.CANDIDATE_ID;
 // This function draws Polyanets on a matrix of given Megaverse size and posts the coordinates to the Polyanet API.
 async function postPolyanet(row: number, column: number) {
   try {
-    await delay(1000); // Delay of 1s between requests
+    await delay(5000); // Delay of 5s between requests
     const response = await axios.post(
       "https://challenge.crossmint.io/api/polyanets",
       {

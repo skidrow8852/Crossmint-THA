@@ -1,5 +1,6 @@
 // Helper function to draw a pattern for the Polyanet (based on the dimention of the matrix)
 // 1st Challenge to draw Polyanets on Megaverse (11x11 matrix)
+// Tried using the API call concurrently but it was hitting the rate limit, so i avoided it
 
 export async function generateXPattern(
   size: number,
@@ -11,25 +12,25 @@ export async function generateXPattern(
   let start2 = { row: Math.floor(size / 4), col: size - Math.floor(size / 4) - 1 };
   let start3 = { row: size - Math.floor(size / 4) - 1, col: Math.floor(size / 4) };
   let start4 = { row: size - Math.floor(size / 4) - 1, col: size - Math.floor(size / 4) - 1 };
-  const requests: Promise<void>[] = [];
+  // const requests: Promise<void>[] = [];
 
   for (let i = 0; i <= size - Math.floor(size / 2); i++) {
     if (start1.row + i < size && start1.col + i < size) {
-      requests.push(postPolyanet(start1.row + i, start1.col + i));
+      await postPolyanet(start1.row + i, start1.col + i);
     }
     if (start2.row + i < size && start2.col - i >= 0) {
-      requests.push(postPolyanet(start2.row + i, start2.col - i));
+      await postPolyanet(start2.row + i, start2.col - i);
     }
     if (start3.row - i >= 0 && start3.col + i < size) {
-      requests.push(postPolyanet(start3.row - i, start3.col + i));
+      await postPolyanet(start3.row - i, start3.col + i);
     }
     if (start4.row - i >= 0 && start4.col - i >= 0) {
-      requests.push(postPolyanet(start4.row - i, start4.col - i));
+      await postPolyanet(start4.row - i, start4.col - i);
     }
   }
 
-  await Promise.all(requests);
+  //await Promise.all(requests);
 }
 
 // Delay function to avoind hitting the API rate limit
-export const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
