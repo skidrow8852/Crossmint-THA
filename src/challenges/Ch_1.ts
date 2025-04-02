@@ -2,9 +2,10 @@
 import axios from "axios";
 import { generateXPattern } from "../helpers/draw";
 
-const CANDIDATE_ID = "";
+const CANDIDATE_ID = process.env.CANDIDATE_ID;
 
-async function defaultPostPolyanet(row: number, column: number) {
+// This function draws Polyanets on a matrix of given Megaverse size and posts the coordinates to the Polyanet API.
+async function postPolyanet(row: number, column: number) {
   try {
     const response = await axios.post(
       "/api/polyanets",
@@ -24,4 +25,4 @@ async function defaultPostPolyanet(row: number, column: number) {
 }
 
 const size = 11;
-generateXPattern(size, defaultPostPolyanet);
+generateXPattern(size, postPolyanet);
