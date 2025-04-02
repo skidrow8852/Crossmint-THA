@@ -24,9 +24,9 @@ export async function postPolyanet(row: number, column: number): Promise<void> {
         headers: { "Content-Type": "application/json" },
       }
     );
-    console.log(`Successfully posted at (${row}, ${column})`);
+    console.log(`Successfully posted Polyanet at (${row}, ${column})`);
   } catch (error) {
-    console.error(`Failed to post at (${row}, ${column}):`, error);
+    console.error(`Failed to post Polyanet at (${row}, ${column}):`, error);
   }
 }
 

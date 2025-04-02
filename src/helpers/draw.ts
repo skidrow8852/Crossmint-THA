@@ -55,11 +55,11 @@ export function isAdjacentToPolyanet(map: string[][], row: number, col: number):
     // Check if the new coordinates are within bounds
     if (newRow >= 0 && newRow < map.length && newCol >= 0 && newCol < map[0].length) {
       if (map[newRow][newCol] === "POLYANET") {
-        return true; // Found a POLYanet adjacent
+        return true;
       }
     }
   }
-  return false; // No POLYanet adjacent
+  return false;
 }
 
 // This function draws a pattern for Megaverse using SOLoons, Polyanet and comETHs
