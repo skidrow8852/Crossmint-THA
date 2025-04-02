@@ -30,3 +30,6 @@ export async function generateXPattern(
 
   await Promise.all(requests);
 }
+
+// Delay function to avoind hitting the API rate limit
+export const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

@@ -1,6 +1,6 @@
 // Challnege 1 to draw Polyanets on Megaverse (11x11 matrix)
 import axios from "axios";
-import { generateXPattern } from "../helpers/draw";
+import { delay, generateXPattern } from "../helpers/draw";
 
 // Load environment variables from .env file
 import { config } from "dotenv";
@@ -12,6 +12,7 @@ const CANDIDATE_ID = process.env.CANDIDATE_ID;
 // This function draws Polyanets on a matrix of given Megaverse size and posts the coordinates to the Polyanet API.
 async function postPolyanet(row: number, column: number) {
   try {
+    await delay(1000); // Delay of 1s between requests
     const response = await axios.post(
       "https://challenge.crossmint.io/api/polyanets",
       {
