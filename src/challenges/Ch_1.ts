@@ -2,6 +2,11 @@
 import axios from "axios";
 import { generateXPattern } from "../helpers/draw";
 
+// Load environment variables from .env file
+import { config } from "dotenv";
+config();
+
+// Get the candidate ID from environment variables
 const CANDIDATE_ID = process.env.CANDIDATE_ID;
 
 // This function draws Polyanets on a matrix of given Megaverse size and posts the coordinates to the Polyanet API.
