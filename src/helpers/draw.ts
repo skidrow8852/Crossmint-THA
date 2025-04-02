@@ -2,6 +2,10 @@
 // 1st Challenge to draw Polyanets on Megaverse (11x11 matrix)
 // Tried using the API call concurrently but it was hitting the rate limit, so i avoided it
 
+import { postComETH, postPolyanet, postSOLoon } from "./apis";
+import { Colors, Directions } from "./types";
+
+// This function generates an X pattern on a matrix of given size and posts the coordinates to the Polyanet API. (1st Phase)
 export async function generateXPattern(
   size: number,
   postPolyanet: (row: number, column: number) => Promise<void>
@@ -34,3 +38,83 @@ export async function generateXPattern(
 
 // Delay function to avoind hitting the API rate limit
 export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// Check if a POLYanet exists in any of the adjacent cells (up, down, left, right)
+export function isAdjacentToPolyanet(map: string[][], row: number, col: number): boolean {
+  const directions = [
+    [-1, 0], // up
+    [1, 0], // down
+    [0, -1], // left
+    [0, 1], // right
+  ];
+
+  for (const [dx, dy] of directions) {
+    const newRow = row + dx;
+    const newCol = col + dy;
+
+    // Check if the new coordinates are within bounds
+    if (newRow >= 0 && newRow < map.length && newCol >= 0 && newCol < map[0].length) {
+      if (map[newRow][newCol] === "POLYANET") {
+        return true; // Found a POLYanet adjacent
+      }
+    }
+  }
+  return false; // No POLYanet adjacent
+}
+
+// This function draws a pattern for Megaverse using SOLoons, Polyanet and comETHs
+export async function placeEntitiesOnMap(map: string[][]) {
+  const rowCount = map.length;
+  const colCount = map[0].length;
+
+  for (let row = 0; row < rowCount; row++) {
+    for (let col = 0; col < colCount; col++) {
+      const entity = map[row][col];
+
+      // POLYANET placement
+      if (entity === "POLYANET") {
+        try {
+          await postPolyanet(row, col);
+        } catch (error) {
+          console.error(`Error placing POLYANET at (${row}, ${col}):`, error);
+        }
+      }
+
+      // SOLoon placement: Check if adjacent to POLYANET
+      else if (
+        entity === "PURPLE_SOLOON" ||
+        entity === "RED_SOLOON" ||
+        entity === "BLUE_SOLOON" ||
+        entity === "WHITE_SOLOON"
+      ) {
+        if (isAdjacentToPolyanet(map, row, col)) {
+          const color = entity.split("_")[0].toLowerCase() as Colors;
+          try {
+            await postSOLoon(row, col, color);
+          } catch (error) {
+            console.error(`Error placing SOLoon at (${row}, ${col}):`, error);
+          }
+        } else {
+          console.error(`SOLoon at (${row}, ${col}) is not adjacent to a POLYANET.`);
+        }
+      }
+
+      // comETH placement: Ensure they have a direction
+      else if (
+        entity === "UP_COMETH" ||
+        entity === "DOWN_COMETH" ||
+        entity === "LEFT_COMETH" ||
+        entity === "RIGHT_COMETH"
+      ) {
+        const direction = entity.split("_")[0].toLowerCase() as Directions;
+        try {
+          await postComETH(row, col, direction);
+        } catch (error) {
+          console.error(`Error placing comETH at (${row}, ${col}) facing ${direction}:`, error);
+        }
+      }
+    }
+  }
+
+  console.log("Entities placed on the map.");
+}
