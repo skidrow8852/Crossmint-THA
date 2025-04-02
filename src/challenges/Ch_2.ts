@@ -2,11 +2,9 @@
 import { deletePolyanet, getAllCoordinates } from "../helpers/apis";
 import { generateXPattern, placeEntitiesOnMap } from "../helpers/draw";
 
-const size = 11;
-
 const drawLogo = async () => {
   // delete all previous entities
-  await generateXPattern(size, deletePolyanet);
+  await generateXPattern(deletePolyanet);
 
   // draw logo using SOLoons, POLYanet and comETHs
   let data = await getAllCoordinates();

@@ -2,5 +2,4 @@
 import { postPolyanet } from "../helpers/apis";
 import { generateXPattern } from "../helpers/draw";
 
-const size = 11;
-generateXPattern(size, postPolyanet);
+generateXPattern(postPolyanet);
