@@ -1,0 +1,45 @@
+import axios from "axios";
+
+// Load environment variables from .env file
+import { config } from "dotenv";
+import { delay } from "./draw";
+import { Directions } from "./types";
+config();
+
+// Get the candidate ID from environment variables
+const CANDIDATE_ID = process.env.CANDIDATE_ID;
+
+// This function draws Polyanets on a matrix of given Megaverse size and posts the coordinates to the Polyanet API.
+export async function postPolyanet(row: number, column: number) {
+  try {
+    await delay(1000); // Delay of 1s between requests
+    const response = await axios.post(
+      "https://challenge.crossmint.io/api/polyanets",
+      {
+        row,
+        column,
+        candidateId: CANDIDATE_ID,
+      },
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    console.log(`Successfully posted at (${row}, ${column})`);
+  } catch (error) {
+    console.error(`Failed to post at (${row}, ${column}):`, error);
+  }
+}
+
+// This function posts a comETH at given coordinates with direction
+export async function postComETH(row: number, column: number, direction: Directions) {
+  try {
+    await axios.post(
+      "https://challenge.crossmint.io/api/comeths",
+      { row, column, direction, candidateId: CANDIDATE_ID },
+      { headers: { "Content-Type": "application/json" } }
+    );
+    console.log(`comETH placed at (${row}, ${column}) facing ${direction}`);
+  } catch (error) {
+    console.error(`Failed to place comETH at (${row}, ${column}):`, error);
+  }
+}
