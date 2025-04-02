@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "ch1": "tsc && node dist/challenges/Ch_1.js",
+    "ch2": "tsc && node dist/challenges/Ch_2.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Youssef Rais",
   "license": "ISC",
   "description": "",
   "devDependencies": {

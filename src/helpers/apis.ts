@@ -69,3 +69,21 @@ export async function getAllCoordinates(): Promise<string[][]> {
     console.error(`Failed to get the goal`, error);
   }
 }
+
+// This function deletes Polyanets based on row and column numbers.
+export async function deletePolyanet(row: number, column: number): Promise<void> {
+  try {
+    await delay(1000); // Delay of 1s between requests
+    await axios.delete("https://challenge.crossmint.io/api/polyanets", {
+      data: {
+        row,
+        column,
+        candidateId: CANDIDATE_ID,
+      },
+      headers: { "Content-Type": "application/json" },
+    });
+    console.log(`Successfully deleted Polyanet at (${row}, ${column})`);
+  } catch (error) {
+    console.error(`Failed to delete Polyanet at (${row}, ${column}):`, error);
+  }
+}
