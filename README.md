@@ -6,22 +6,14 @@
 git clone https://github.com/skidrow8852/Crossmint-THA.git
 ```
 
-## Phase 1
-
-Do a POLYanet cross
-
-#### Run Phase 1 solution
+## Run the Challenges
 
 ```js
-npm run ch1
+npm run ch
 ```
 
-## Phase 2
-
-Crossmint logo. With 🌙SOLoons and ☄comETHs!
-
-#### Run Phase 2 solution
+## Run the Tests
 
 ```js
-npm run ch2
+npm run test
 ```
